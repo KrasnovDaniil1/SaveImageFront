@@ -11,18 +11,19 @@
     />
     <div class="app">
         <MainHeader />
+        <PopupAddCard />
         <router-view />
     </div>
 </template>
 <script>
 import MainHeader from './components/MainHeader.vue';
+import PopupAddCard from './components/PopupAddCard.vue';
+
 export default {
     components: {
         MainHeader,
+        PopupAddCard,
     },
-    // setup() {
-
-    // },
 };
 </script>
 <style lang="scss">
@@ -30,9 +31,6 @@ export default {
     --font-first: 'Playfair Display';
 }
 
-// .app {
-//     margin: 0 auto;
-// }
 * {
     padding: 0;
     margin: 0;
@@ -93,16 +91,12 @@ textarea {
 }
 ::-webkit-scrollbar {
     /*блок скролла*/
-    background: linear-gradient(
-        to bottom,
-        rgb(43, 50, 178) 0%,
-        rgb(20, 136, 204) 100%
-    );
+    background: #f2f2f2;
     width: 5px;
 }
 ::-webkit-scrollbar-thumb {
     /*ползунок скролла*/
+    background: #000;
     border-radius: 10px;
-    background: #fff;
 }
 </style>

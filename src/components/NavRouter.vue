@@ -1,5 +1,5 @@
 <template>
-    <router-link :to="path" >{{ nav }}</router-link>
+    <router-link :to="path">{{ nav }}</router-link>
 </template>
 <script>
 export default {
@@ -9,6 +9,7 @@ export default {
             type: String,
             required: true,
         },
+
         path: {
             type: String,
             required: true,
