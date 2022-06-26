@@ -1,5 +1,5 @@
 <template>
-    <div class="addCard">
+    <div class="addCard" v-if="closePopup">
         <div class="shimer"></div>
         <div class="popup">
             <div class="add-image">
@@ -7,6 +7,9 @@
                 <span class="tag">#Добавьте теги</span>
             </div>
             <div class="add-tag">
+                <button class="popup-close">
+                    <i class="fas fa-times-square"></i>
+                </button>
                 <label class="tag-block">
                     <input
                         type="text"
@@ -37,9 +40,15 @@
     </div>
 </template>
 <script>
+import { ref } from 'vue';
+
 export default {
     name: 'PopupAddCard',
-    setup() {},
+
+    setup() {
+        const closePopup = ref(false);
+        return { closePopup };
+    },
 };
 </script>
 <style lang="scss" scoped>
@@ -48,10 +57,12 @@ export default {
     top: 0;
     left: 0;
     z-index: 1;
+
     .shimer {
         width: 100vw;
         height: 100vh;
         backdrop-filter: blur(5px);
+        background: rgba(0, 0, 0, 0.3);
     }
     .popup {
         position: absolute;
@@ -62,6 +73,7 @@ export default {
         padding: 10px;
         background: #f2f2f2;
         border-radius: 10px;
+        border: 1px solid #000;
 
         .add-image {
             position: relative;
@@ -94,6 +106,11 @@ export default {
             flex-direction: column;
             margin-left: 20px;
             font-size: 25px;
+            .popup-close {
+                font-size: 40px;
+                margin-left: auto;
+                margin-bottom: 10px;
+            }
             .tag-block {
                 display: flex;
                 align-items: center;

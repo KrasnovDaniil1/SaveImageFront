@@ -25,12 +25,17 @@
 </template>
 <script>
 import CardImage from '../components/CardImage.vue';
+// import { ref } from 'vue';
+
 export default {
     name: 'AllCard',
     components: {
         CardImage,
     },
-    setup() {},
+    setup() {
+        // const cardPopup = ref(false);
+        // return { cardPopup };
+    },
 };
 </script>
 <style lang="scss" scoped>

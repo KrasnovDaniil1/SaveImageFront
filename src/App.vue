@@ -12,17 +12,21 @@
     <div class="app">
         <MainHeader />
         <PopupAddCard />
+        <ZoomImage />
+
         <router-view />
     </div>
 </template>
 <script>
 import MainHeader from './components/MainHeader.vue';
 import PopupAddCard from './components/PopupAddCard.vue';
+import ZoomImage from './components/ZoomImage.vue';
 
 export default {
     components: {
         MainHeader,
         PopupAddCard,
+        ZoomImage,
     },
 };
 </script>
