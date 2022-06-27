@@ -9,7 +9,7 @@
                 />
                 <i class="search-icon far fa-search"></i>
             </label>
-            <button class="download">
+            <button class="download" @click="openPopupAddCard">
                 <i class="fas fa-file-download"></i>
             </button>
         </div>
@@ -25,7 +25,7 @@
 </template>
 <script>
 import CardImage from '../components/CardImage.vue';
-// import { ref } from 'vue';
+import { useStore } from 'vuex';
 
 export default {
     name: 'AllCard',
@@ -33,8 +33,13 @@ export default {
         CardImage,
     },
     setup() {
-        // const cardPopup = ref(false);
-        // return { cardPopup };
+        const store = useStore();
+        const openPopupAddCard = () => {
+            store.commit('openPopupAddCard');
+        };
+        return {
+            openPopupAddCard,
+        };
     },
 };
 </script>

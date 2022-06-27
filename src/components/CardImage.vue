@@ -2,8 +2,14 @@
     <div class="card">
         <div class="image-block">
             <img class="image" :src="src" />
-            <i class="icon icon-download fas fa-arrow-alt-circle-down"></i>
-            <i class="icon icon-plus fas fa-search-plus"></i>
+            <a :href="src" download target="_blank">
+                <i class="icon icon-download fas fa-arrow-alt-circle-down"></i>
+            </a>
+
+            <i
+                class="icon icon-plus fas fa-search-plus"
+                @click="openZoomImage(src)"
+            ></i>
         </div>
         <div class="teg-block">
             <span class="teg" v-for="(tag, index) in tags" :key="index">
@@ -13,6 +19,8 @@
     </div>
 </template>
 <script>
+import { useStore } from 'vuex';
+
 export default {
     name: 'CardImage',
     props: {
@@ -26,7 +34,15 @@ export default {
             required: true,
         },
     },
-    setup() {},
+    setup() {
+        const store = useStore();
+        const openZoomImage = (src) => {
+            store.commit('openZoomImage', src);
+        };
+        return {
+            openZoomImage,
+        };
+    },
 };
 </script>
 <style lang="scss" scoped>

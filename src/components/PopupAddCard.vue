@@ -1,5 +1,5 @@
 <template>
-    <div class="addCard" v-if="closePopup">
+    <div class="addCard" v-if="popup">
         <div class="shimer"></div>
         <div class="popup">
             <div class="add-image">
@@ -7,7 +7,7 @@
                 <span class="tag">#Добавьте теги</span>
             </div>
             <div class="add-tag">
-                <button class="popup-close">
+                <button class="popup-close" @click="closePopup">
                     <i class="fas fa-times-square"></i>
                 </button>
                 <label class="tag-block">
@@ -40,14 +40,22 @@
     </div>
 </template>
 <script>
-import { ref } from 'vue';
+import { computed } from 'vue';
+import { useStore } from 'vuex';
 
 export default {
     name: 'PopupAddCard',
 
     setup() {
-        const closePopup = ref(false);
-        return { closePopup };
+        const store = useStore();
+        const closePopup = () => {
+            store.commit('openPopupAddCard');
+        };
+        // const closePopup = ref(false);
+        return {
+            closePopup,
+            popup: computed(() => store.getters.returnPopupAddCard),
+        };
     },
 };
 </script>

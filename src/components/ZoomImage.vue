@@ -1,32 +1,29 @@
 <template>
-    <div class="zoom" v-if="false">
+    <div class="zoom" v-if="zoomImage != ''">
         <div class="shimer"></div>
         <div class="image-block">
-            <img
-                class="image"
-                src="https://yahont-hotel.ru/ckeditor_images/chernomorskoje_vid.jpg"
-                ref="selectImage"
-                alt=""
-            />
-            <button class="image-close" @click="calcSizeImage">
+            <img class="image" :src="zoomImage" alt="Изображение" />
+            <button class="image-close" @click="closePopup">
                 <i class="icon icon-plus fas fa-search-minus"></i>
             </button>
         </div>
     </div>
 </template>
 <script>
-import { ref } from 'vue';
+import { computed } from 'vue';
+
+import { useStore } from 'vuex';
 
 export default {
     name: 'ZoomImage',
     setup() {
-        const selectImage = ref();
-        const calcSizeImage = () => {
-            console.log(selectImage.value.clientWidth);
+        const store = useStore();
+        const closePopup = () => {
+            store.commit('openZoomImage', '');
         };
         return {
-            selectImage,
-            calcSizeImage,
+            closePopup,
+            zoomImage: computed(() => store.getters.returnZoomImage),
         };
     },
 };
