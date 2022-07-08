@@ -1,7 +1,6 @@
 <template>
     <div class="tagblock">
         <span class="tag">#{{ tag }}</span>
-        <span class="tag-info">{{ info }}</span>
     </div>
 </template>
 <script>

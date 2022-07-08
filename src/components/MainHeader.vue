@@ -1,8 +1,15 @@
 <template>
     <div class="header">
-        <div class="logo">SaveImage</div>
+        <NavRouter class="logo" path="/" nav="SaveImage" />
         <div class="navigation">
-            <NavRouter class="router" path="/" nav="О проекте" />
+            <NavRouter class="router" path="/allcard" nav="Картинки" />
+            <NavRouter class="router" path="/alltag" nav="Тэги" />
+        </div>
+        <div class="burger" @click="changeBurgerActive">
+            <i class="far fa-bars" v-if="!burgerActive"></i>
+            <i class="far fa-times" v-else></i>
+        </div>
+        <div :class="['burger-menu', { 'burger-menu-active': burgerActive }]">
             <NavRouter class="router" path="/allcard" nav="Картинки" />
             <NavRouter class="router" path="/alltag" nav="Тэги" />
         </div>
@@ -10,36 +17,82 @@
 </template>
 <script>
 import NavRouter from './NavRouter.vue';
+import { ref } from 'vue';
 export default {
     name: 'MainHeader',
     components: {
         NavRouter,
     },
-    // setup() {
-    //
-    // },
+    setup() {
+        const burgerActive = ref(false);
+        const changeBurgerActive = () => {
+            burgerActive.value = !burgerActive.value;
+        };
+        return {
+            burgerActive,
+            changeBurgerActive,
+        };
+    },
 };
 </script>
 <style lang="scss" scoped>
 .header {
-    padding: 10px 50px;
+    padding: var(--indent-first) calc(5 * var(--indent-first));
     display: flex;
     justify-content: space-between;
     width: 100%;
     border-bottom: 3px solid #000;
-    font-family: var(--font-second);
-    font-size: 30px;
+    font-size: var(--size-second);
+    font-family: var(--font-first);
+    z-index: 1;
     .logo {
         font-style: italic;
     }
     .navigation {
         .router {
-            padding: 10px;
-            margin: 0 10px;
+            padding: var(--indent-first);
+            margin: 0 var(--indent-first);
         }
         .router-link-active {
             border: 3px solid #000;
             border-bottom: 4px solid #f2f2f2;
+        }
+    }
+    .burger,
+    .burger-menu {
+        display: none;
+    }
+}
+@media screen and (max-width: 920px) {
+    .header {
+        position: relative;
+        .navigation {
+            display: none;
+        }
+        .burger {
+            display: block;
+            cursor: pointer;
+        }
+        .burger-menu {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            transform: translateX(100%);
+            border: 3px solid #000;
+            background: #f2f2f2;
+            border-radius: 0 0 5px 5px;
+            transition: all 0.75s;
+            .router {
+                padding: var(--indent-first) calc(3 * var(--indent-first));
+            }
+            .router-link-active {
+                text-decoration: underline;
+            }
+        }
+        .burger-menu-active {
+            transform: translateX(0%);
         }
     }
 }
