@@ -37,22 +37,20 @@ export default {
 }
 :root {
     --font-first: 'Playfair Display';
-    --size-first: 25px;
+    --size-first: max(22px, 1.3vw);
     --size-second: max(25px, 1.5vw);
     --size-third: max(40px, 2.2vw);
-    --indent-first: max(5px, 0.5vw);
 }
 
 @media screen and (max-width: 920px) {
     :root {
-        --indent-first: max(5px, 0.5vw);
         --size-third: 32px;
     }
 }
 @media screen and (max-width: 420px) {
     :root {
         --size-second: 22px;
-        --size-third: 32px;
+        --size-first: 20px;
     }
 }
 

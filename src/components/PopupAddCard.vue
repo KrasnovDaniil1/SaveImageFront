@@ -1,5 +1,5 @@
 <template>
-    <div class="addCard" v-if="popup">
+    <div :class="['addCard', { 'addCard-active': popup }]">
         <div class="shimer"></div>
         <div class="popup">
             <div class="add-image">
@@ -16,7 +16,6 @@
                         class="tag-input"
                         placeholder="Введите тег ..."
                     />
-                    <i class="fas fa-plus-circle"></i>
                 </label>
                 <label class="tag-block">
                     <input
@@ -24,7 +23,6 @@
                         class="tag-input"
                         placeholder="Введите тег ..."
                     />
-                    <i class="fas fa-plus-circle"></i>
                 </label>
                 <label class="tag-block">
                     <input
@@ -32,7 +30,13 @@
                         class="tag-input"
                         placeholder="Введите тег ..."
                     />
-                    <i class="fas fa-plus-circle"></i>
+                </label>
+                <label class="tag-block">
+                    <input
+                        type="text"
+                        class="tag-input"
+                        placeholder="Введите тег ..."
+                    />
                 </label>
                 <button class="btn-add">Сохранить</button>
             </div>
@@ -64,8 +68,9 @@ export default {
     position: fixed;
     top: 0;
     left: 0;
+    transform: translateX(-100%);
     z-index: 1;
-
+    transition: all 0.5s;
     .shimer {
         width: 100vw;
         height: 100vh;
@@ -85,7 +90,7 @@ export default {
 
         .add-image {
             position: relative;
-            width: 400px;
+            width: max(300px, 20vw);
             aspect-ratio: 1/1;
             background: #fff;
             border-radius: 10px;
@@ -100,7 +105,7 @@ export default {
             .tag {
                 color: #0b64fe;
                 position: absolute;
-                font-size: 30px;
+                font-size: var(--size-second);
                 text-align: center;
                 bottom: 0;
                 margin: 20px 0;
@@ -112,10 +117,10 @@ export default {
         .add-tag {
             display: flex;
             flex-direction: column;
-            margin-left: 20px;
-            font-size: 25px;
+            margin-left: max(15px, 1vw);
+            font-size: var(--size-second);
             .popup-close {
-                font-size: 40px;
+                font-size: var(--size-third);
                 margin-left: auto;
                 margin-bottom: 10px;
             }
@@ -123,21 +128,54 @@ export default {
                 display: flex;
                 align-items: center;
                 width: 100%;
-                min-width: 300px;
+                min-width: max(300px, 15vw);
                 border: 3px solid #000;
                 padding: 5px;
                 border-radius: 10px;
-                margin-bottom: 20px;
+                margin-bottom: max(10px, 1vw);
             }
             .btn-add {
-                font-size: 30px;
                 width: 100%;
-                padding: 15px 0;
+                padding: 10px 0;
                 background: #0b64fe;
                 color: #fff;
                 margin-top: auto;
                 border-radius: 4px;
             }
+        }
+    }
+}
+.addCard-active {
+    transform: translateX(0);
+}
+@media screen and (max-width: 720px) {
+    .addCard {
+        .popup {
+            width: 75%;
+            flex-direction: column;
+            align-items: center;
+            .add-image {
+                margin-bottom: 10px;
+                width: 100%;
+            }
+            .add-tag {
+                margin-left: 0;
+                .popup-close {
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
+                }
+                .tag-block {
+                    min-width: 100%;
+                }
+            }
+        }
+    }
+}
+@media screen and (max-width: 420px) {
+    .addCard {
+        .popup {
+            width: 90%;
         }
     }
 }

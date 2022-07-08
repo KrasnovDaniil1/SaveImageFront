@@ -45,28 +45,31 @@ export default {
 </script>
 <style lang="scss" scoped>
 .allcard {
+    margin: 0 max(25px, 2.5vw);
+    font-size: var(--size-first);
+
     .search-block {
-        margin: 20px 0;
+        margin: 20px auto;
         display: flex;
         justify-content: center;
-        font-size: 25px;
 
         .search {
             position: relative;
-            width: 500px;
-            padding: 5px;
+            width: 100%;
+            max-width: 500px;
+            padding: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             border: 3px solid #000;
             border-radius: 10px;
             .search-input {
-                padding-right: 5px;
+                padding-right: 10px;
             }
         }
         .download {
-            padding: 0 10px;
-            margin: 0 20px;
+            padding: 0 max(10px, 1vw);
+            margin-left: max(20px, 2vw);
             color: #fff;
             background: #000;
             border-radius: 4px;
@@ -77,8 +80,21 @@ export default {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         justify-content: center;
-        grid-gap: 50px;
-        margin: 0 50px;
+        grid-gap: max(25px, 2.5vw);
+    }
+}
+@media screen and (max-width: 920px) {
+    .allcard {
+        .card-block {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+}
+@media screen and (max-width: 420px) {
+    .allcard {
+        .card-block {
+            grid-template-columns: repeat(1, 1fr);
+        }
     }
 }
 </style>

@@ -37,7 +37,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .header {
-    padding: var(--indent-first) calc(5 * var(--indent-first));
+    padding: max(5px, 0.5vw) max(25px, 2.5vw);
     display: flex;
     justify-content: space-between;
     width: 100%;
@@ -50,8 +50,8 @@ export default {
     }
     .navigation {
         .router {
-            padding: var(--indent-first);
-            margin: 0 var(--indent-first);
+            padding: max(5px, 0.5vw);
+            margin: 0 max(5px, 0.5vw);
         }
         .router-link-active {
             border: 3px solid #000;

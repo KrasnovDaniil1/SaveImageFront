@@ -31,30 +31,25 @@ export default {
 </script>
 <style lang="scss" scoped>
 .alltag {
+    margin: 0 max(25px, 2.5vw);
+    font-size: var(--size-first);
     .search {
         margin: 20px auto;
-        width: 500px;
+        width: 100%;
+        max-width: 500px;
         display: flex;
         align-items: center;
         justify-content: center;
         border: 3px solid #000;
-        padding: 5px;
+        padding: 10px;
         border-radius: 10px;
-        font-size: 25px;
         .search-input {
-            padding-right: 5px;
+            padding-right: 10px;
         }
     }
     .tag-block {
         display: flex;
         flex-wrap: wrap;
     }
-    // .card-block {
-    //     display: grid;
-    //     grid-template-columns: repeat(3, 1fr);
-    //     justify-content: center;
-    //     grid-gap: 50px;
-    //     margin: 0 50px;
-    // }
 }
 </style>
