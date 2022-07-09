@@ -10,9 +10,9 @@
         </label>
         <div class="tag-block">
             <TagBlock
-                v-for="index in 20"
-                :key="index"
-                tag="background"
+                v-for="tag in allTags"
+                :key="tag.id"
+                :tag="tag.tags"
                 info="1234"
             />
         </div>
@@ -20,13 +20,24 @@
 </template>
 <script>
 import TagBlock from '../components/TagBlock.vue';
+import { useStore } from 'vuex';
+import { onMounted, computed } from '@vue/runtime-core';
+
 export default {
     name: 'AllTag',
     components: {
         TagBlock,
     },
 
-    setup() {},
+    setup() {
+        const store = useStore();
+        onMounted(() => {
+            store.dispatch('getAllTags');
+        });
+        return {
+            allTags: computed(() => store.getters.returnAllTags),
+        };
+    },
 };
 </script>
 <style lang="scss" scoped>

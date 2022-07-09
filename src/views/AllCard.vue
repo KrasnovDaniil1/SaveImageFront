@@ -15,9 +15,9 @@
         </div>
         <div class="card-block">
             <CardImage
-                v-for="index in 6"
-                :key="index"
-                src="https://99px.ru/sstorage/53/2013/12/tmb_91205_3821.jpg"
+                v-for="card in allCards"
+                :key="card.id"
+                :src="card.src"
                 :tags="['we', 'we', 'we']"
             />
         </div>
@@ -26,6 +26,7 @@
 <script>
 import CardImage from '../components/CardImage.vue';
 import { useStore } from 'vuex';
+import { onMounted, computed } from '@vue/runtime-core';
 
 export default {
     name: 'AllCard',
@@ -37,8 +38,13 @@ export default {
         const openPopupAddCard = () => {
             store.commit('openPopupAddCard');
         };
+
+        onMounted(() => {
+            store.dispatch('getAllCard');
+        });
         return {
             openPopupAddCard,
+            allCards: computed(() => store.getters.returnAllCard),
         };
     },
 };
