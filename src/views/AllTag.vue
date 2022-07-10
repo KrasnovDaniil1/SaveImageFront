@@ -9,12 +9,7 @@
             <i class="search-icon far fa-search"></i>
         </label>
         <div class="tag-block">
-            <TagBlock
-                v-for="tag in allTags"
-                :key="tag.id"
-                :tag="tag.tags"
-                info="1234"
-            />
+            <TagBlock v-for="(tag, index) in allTags" :key="index" :tag="tag" />
         </div>
     </div>
 </template>

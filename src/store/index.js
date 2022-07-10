@@ -32,26 +32,38 @@ export default createStore({
         changeAllCard(state, allCard) {
             state.allCard = allCard;
         },
-        changeAllTags(state, tags) {
-            state.allTags = tags;
+        changeAllTags(state, tagsBlock) {
+            let notSortTags = [];
+            let sortTags = [];
+
+            /*господи, не спрашивайте почему так, с backend передаю теги в виде текста а в виде массива, вот и приходиться колхозить */
+            for (let i = 0; i < tagsBlock.length; i++) {
+                let tags = tagsBlock[i].tags.split(',');
+                tags[0] = tags[0].slice(1);
+                tags[tags.length - 1] = tags[tags.length - 1].slice(0, -1);
+                notSortTags.push(...tags);
+            }
+
+            for (const elem of notSortTags) {
+                if (!sortTags.includes(elem)) {
+                    sortTags.push(elem);
+                }
+            }
+            state.allTags = sortTags;
         },
     },
     actions: {
         async getAllCard(context) {
-            // const res = await axios.get(
-            //     'http://localhost:8080/cards?limit=100&offset=0'
-            // );
-            // context.commit('changeAllCard', res.data.card);
-            // console.log(res.data.card);
             axios
                 .get('http://localhost:8080/cards?limit=100&offset=0')
                 .then((res) => context.commit('changeAllCard', res.data.card))
                 .catch((error) => console.log(error));
         },
         async getAllTags(context) {
-            const res = await axios.get('http://localhost:8080/tags');
-            context.commit('changeAllTags', res.data.tags);
-            console.log(res.data.tags);
+            axios
+                .get('http://localhost:8080/tags')
+                .then((res) => context.commit('changeAllTags', res.data.tags))
+                .catch((error) => console.log(error));
         },
     },
     modules: {},

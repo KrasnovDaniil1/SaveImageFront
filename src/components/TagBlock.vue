@@ -11,11 +11,6 @@ export default {
             type: String,
             required: true,
         },
-
-        info: {
-            type: String,
-            required: true,
-        },
     },
     setup() {},
 };
