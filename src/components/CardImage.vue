@@ -2,7 +2,7 @@
     <div class="card">
         <div class="image-block">
             <img class="image" :src="src" />
-            <a :href="src" download target="_blank">
+            <a :href="src" target="_blank" :download="src">
                 <i class="icon icon-download fas fa-arrow-alt-circle-down"></i>
             </a>
 

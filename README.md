@@ -1,24 +1,4 @@
-# save-image
-
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+<h1>Save-image</h1>
+<span>Сайт создан для добавления картинок с тэгами. Нету регистрации/удаление картинок. Поиск картинок осуществляеться по тэгам. Backend писал сам. Сайт не доделан, до лучших времён. Дизайн полностью готов, надо переделывать логику - loader/search ...</span>
+<img src="./gitImage/1.png"/>
+<img src="./gitImage/2.png"/>

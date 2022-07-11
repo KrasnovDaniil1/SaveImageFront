@@ -7,6 +7,7 @@ export default createStore({
         zoomImage: '',
         allCard: [],
         allTags: [],
+        statusGetCard: false,
     },
     getters: {
         returnPopupAddCard(state) {
@@ -21,6 +22,10 @@ export default createStore({
         returnAllTags(state) {
             return state.allTags;
         },
+        returnStatusGetCard(state) {
+            // console.log(state.statusGetCard);
+            return state.statusGetCard;
+        },
     },
     mutations: {
         openPopupAddCard(state) {
@@ -29,13 +34,26 @@ export default createStore({
         openZoomImage(state, src) {
             state.zoomImage = src;
         },
+        changeStatusGetCard(state, bool) {
+            state.statusGetCard = bool;
+        },
         changeAllCard(state, allCard) {
-            state.allCard = allCard;
+            /*господи, не спрашивайте почему так, с backend передаю теги в виде текста а в виде массива, вот и приходиться колхозить */
+            if (allCard.length != 0) {
+                for (const elem of allCard) {
+                    elem.tags = elem.tags.split(',');
+                    elem.tags[0] = elem.tags[0].slice(1);
+                    elem.tags[elem.tags.length - 1] = elem.tags[
+                        elem.tags.length - 1
+                    ].slice(0, -1);
+                }
+
+                state.allCard = state.allCard.concat(allCard);
+            }
         },
         changeAllTags(state, tagsBlock) {
             let notSortTags = [];
             let sortTags = [];
-
             /*господи, не спрашивайте почему так, с backend передаю теги в виде текста а в виде массива, вот и приходиться колхозить */
             for (let i = 0; i < tagsBlock.length; i++) {
                 let tags = tagsBlock[i].tags.split(',');
@@ -53,12 +71,18 @@ export default createStore({
         },
     },
     actions: {
-        async getAllCard(context) {
+        async getAllCard(context, card) {
             axios
-                .get('http://localhost:8080/cards?limit=100&offset=0')
-                .then((res) => context.commit('changeAllCard', res.data.card))
+                .get(
+                    `http://localhost:8080/cards?search=${card.search}&limit=${card.limit}&offset=${card.offset}`
+                )
+                .then((res) => {
+                    context.commit('changeAllCard', res.data.card),
+                        context.commit('changeStatusGetCard', true);
+                })
                 .catch((error) => console.log(error));
         },
+        
         async getAllTags(context) {
             axios
                 .get('http://localhost:8080/tags')

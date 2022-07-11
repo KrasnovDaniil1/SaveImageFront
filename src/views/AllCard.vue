@@ -6,8 +6,9 @@
                     type="text"
                     class="search-input"
                     placeholder="Введите тег ..."
+                    v-model="search"
                 />
-                <i class="search-icon far fa-search"></i>
+                <i class="search-icon far fa-search" @click="searchElem"></i>
             </label>
             <button class="download" @click="openPopupAddCard">
                 <i class="fas fa-file-download"></i>
@@ -18,32 +19,78 @@
                 v-for="card in allCards"
                 :key="card.id"
                 :src="card.src"
-                :tags="['we', 'we', 'we']"
+                :tags="card.tags"
             />
         </div>
+        <LoaderAll :loader="loaderActive || allCards.length == 0" />
     </div>
 </template>
 <script>
 import CardImage from '../components/CardImage.vue';
+import LoaderAll from '../components/LoaderAll.vue';
+
 import { useStore } from 'vuex';
-import { onMounted, computed } from '@vue/runtime-core';
+import { onMounted, computed, onBeforeUnmount, ref } from '@vue/runtime-core';
 
 export default {
     name: 'AllCard',
     components: {
         CardImage,
+        LoaderAll,
     },
     setup() {
         const store = useStore();
+        const loaderActive = ref(!store.getters.returnStatusGetCard);
+        const cardSee = ref(9);
+        const search = ref('');
+        const searchElem = () => {
+            store.dispatch('getAllCard', {
+                limit: cardSee.value,
+                offset: cardSee.value - 9,
+                search: search.value,
+            });
+        };
+        const scrollCard = () => {
+            if (
+                window.innerHeight + window.pageYOffset + 80 >=
+                    document.body.offsetHeight &&
+                loaderActive
+            ) {
+                cardSee.value += 9;
+                store.dispatch('changeStatusGetCard', false);
+                store.dispatch('getAllCard', {
+                    limit: cardSee.value,
+                    offset: cardSee.value - 9,
+                    search: search.value,
+                });
+            }
+            console.log(loaderActive.value);
+        };
+
         const openPopupAddCard = () => {
             store.commit('openPopupAddCard');
         };
 
         onMounted(() => {
-            store.dispatch('getAllCard');
+            store.dispatch('getAllCard', {
+                limit: 9,
+                offset: 0,
+                search: '',
+            });
+            window.addEventListener('scroll', scrollCard);
         });
+
+        onBeforeUnmount(() => {
+            window.removeEventListener('scroll', scrollCard);
+        });
+
         return {
             openPopupAddCard,
+            scrollCard,
+            searchElem,
+            loaderActive,
+            cardSee,
+            search,
             allCards: computed(() => store.getters.returnAllCard),
         };
     },
@@ -53,7 +100,7 @@ export default {
 .allcard {
     margin: 0 max(25px, 2.5vw);
     font-size: var(--size-first);
-
+    // overflow: scroll;
     .search-block {
         margin: 20px auto;
         display: flex;
